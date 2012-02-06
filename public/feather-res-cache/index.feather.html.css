@@ -1,0 +1,183 @@
+
+
+/* ========== app.css ========== */
+
+.cardmagic_app .deck1Pos
+{
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+  padding: 0px;
+}
+
+/* ========== deckofcards.css ========== */
+
+.cardmagic_deckofcards .p1deck
+{
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_deckofcards .cardP1Pos
+{
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  padding: 0px;
+  opacity: 1;
+}
+
+/* ========== card.css ========== */
+
+.cardmagic_card .smallCard
+{
+  width: 100px;
+  height: 150px;
+  vertical-align: middle;
+  max-width: 125;
+}
+
+.cardmagic_card .largeCard
+{
+  width: 200px;
+  height: 300px;
+}
+
+/* ========== playingboard.css ========== */
+
+body {
+  background-color: #000;
+}
+
+/* ========== handofcards.css ========== */
+
+.cardmagic_handofcards .p1hand_1
+{
+  position: absolute;
+  left: 200px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_2
+{
+  position: absolute;
+  left: 310px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_3
+{
+  position: absolute;
+  left: 420px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_4
+{
+  position: absolute;
+  left: 530px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_5
+{
+  position: absolute;
+  left: 640px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_6
+{
+  position: absolute;
+  left: 750px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_7
+{
+  position: absolute;
+  left: 860px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_8
+{
+  position: absolute;
+  left: 970px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_9
+{
+  position: absolute;
+  left: 1080px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_handofcards .p1hand_10
+{
+  position: absolute;
+  left: 1190px;
+  bottom: 50px;
+  padding: 0px;
+  opacity: 1;
+}
+
+/* ========== container.css ========== */
+
+.cardmagic_container .p1Land
+{
+  position: absolute;
+  bottom: 200px;
+  height: 200px;
+  width: 80%;
+  left: 200px;
+}
+
+.cardmagic_container .p2Land
+{
+  position: absolute;
+  bottom: 800px;
+  height: 200px;
+  width: 100%;
+  left: 200px;
+}
+
+.cardmagic_container .p1GraveYard
+{
+  position: absolute;
+  bottom: 200px;
+  height: 200px;
+  width: 100%;
+  left: 200px;
+}
+
+.cardmagic_container .p2GraveYard
+{
+  position: absolute;
+  bottom: 200px;
+  height: 200px;
+  width: 100%;
+  left: 200px;
+}

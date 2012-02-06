@@ -1,0 +1,8 @@
+{
+  "useAjaxForSystem": true,
+  "host": "ubuntu",
+  "socket.io": {
+    "host": "ubuntu",
+    "port": 8081
+  }
+}

@@ -1,0 +1,17 @@
+.cardmagic_deckofcards .p1deck
+{
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  padding: 0px;
+  opacity: 1;
+}
+
+.cardmagic_deckofcards .cardP1Pos
+{
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  padding: 0px;
+  opacity: 1;
+}

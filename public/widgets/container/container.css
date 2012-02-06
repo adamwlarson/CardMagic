@@ -1,0 +1,35 @@
+.cardmagic_container .p1Land
+{
+  position: absolute;
+  bottom: 200px;
+  height: 200px;
+  width: 80%;
+  left: 200px;
+}
+
+.cardmagic_container .p2Land
+{
+  position: absolute;
+  bottom: 800px;
+  height: 200px;
+  width: 100%;
+  left: 200px;
+}
+
+.cardmagic_container .p1GraveYard
+{
+  position: absolute;
+  bottom: 200px;
+  height: 200px;
+  width: 100%;
+  left: 200px;
+}
+
+.cardmagic_container .p2GraveYard
+{
+  position: absolute;
+  bottom: 200px;
+  height: 200px;
+  width: 100%;
+  left: 200px;
+}

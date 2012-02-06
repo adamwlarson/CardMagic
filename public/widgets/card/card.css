@@ -1,0 +1,13 @@
+.cardmagic_card .smallCard
+{
+  width: 100px;
+  height: 150px;
+  vertical-align: middle;
+  max-width: 125;
+}
+
+.cardmagic_card .largeCard
+{
+  width: 200px;
+  height: 300px;
+}

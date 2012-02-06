@@ -1,0 +1,85 @@
+{
+  "deck": {
+    "card": [
+    {
+      "filename": "Acidic Slime.full",
+      "name": "Acidic Slime",
+      "attack": "2",
+      "defense": "2",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Birds of Paradise.full",
+      "name": "Birds of Paradise",
+      "attack": "0",
+      "defense": "1",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Cudgel Troll.full",
+      "name": "Cudgel Troll",
+      "attack": "4",
+      "defense": "3",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Forest1.full",
+      "name": "Forest",
+      "attack": "0",
+      "defense": "0",
+      "type": "land",
+      "quantity": "25"
+    },
+    {
+      "filename": "Giant Spider.full",
+      "name": "Giant Spider",
+      "attack": "2",
+      "defense": "4",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Naturalize.full",
+      "name": "Naturalize",
+      "attack": "0",
+      "defense": "0",
+      "type": "instant",
+      "quantity": "4"
+    },
+    {
+      "filename": "Sacred Wolf.full",
+      "name": "Sacred Wolf",
+      "attack": "3",
+      "defense": "1",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Vastwood Gorger.full",
+      "name": "Vastwood Gorger",
+      "attack": "5",
+      "defense": "6",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Stampeding Rhino.full",
+      "name": "Stampeding Rhino",
+      "attack": "4",
+      "defense": "4",
+      "type": "creature",
+      "quantity": "4"
+    },
+    {
+      "filename": "Runeclaw Bear.full",
+      "name": "Runeclaw Bear",
+      "attack": "2",
+      "defense": "2",
+      "type": "creature",
+      "quantity": "3"
+    }]
+  }
+}
