@@ -6,3 +6,11 @@
   padding: 0px;
 }
 
+
+.cardmagic_app .buttonBlock
+{
+  position: absolute;
+  left: 25px;
+  bottom: 200px;
+  padding: 0px;
+}

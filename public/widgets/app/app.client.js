@@ -14,6 +14,10 @@ feather.ns("cardmagic");
         //I want to be able to have a generic container that changes based on where its used
         me.p1LandContainer.setContainerClass( "p1Land" );
         me.p1HandContainer.setContainerClass( "p1Hand" );
+        me.p1GraveYardContainer.setContainerClass( "p1GraveYard" );
+        me.p1InPlayContainer.setContainerClass( "p1InPlay" );
+        me.p2InPlayContainer.setContainerClass( "p2InPlay" );
+        me.p2LandContainer.setContainerClass( "p2Land" );
 
         //Load the Deck
         me.domEvents.bind( me.get( "#btnLoadDeck" ), "click", function( ) {

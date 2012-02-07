@@ -1,18 +1,30 @@
-<widget path="widgets/deckofcards/" id="p1Deck" class="deck1Pos"/>
 <widget path="widgets/playingboard/" id="boardBackground"/>
+<widget path="widgets/deckofcards/" id="p1Deck" class="deck1Pos"/>
 <widget path="widgets/handofcards/" id="p1Hand"/>
 <widget path="widgets/container/" id="p1LandContainer"/>
 <widget path="widgets/container/" id="p1HandContainer"/>
+<widget path="widgets/container/" id="p1GraveYardContainer"/>
+<widget path="widgets/container/" id="p1InPlayContainer"/>
+<widget path="widgets/container/" id="p2InPlayContainer"/>
+<widget path="widgets/container/" id="p2LandContainer"/>
 
-<div>
-  <input type="button" name="decksubmit" value="Load Deck" id="btnLoadDeck"/>
+
+<div class="buttonBlock">
+  <div>
+    <input type="button" name="decksubmit" value="Load Deck" id="btnLoadDeck"/>
+  </div>
+  <div>
+    <input type="button" name="deckdeal" value="Deal Hand" id="btnDealHand"/>
+  </div>
+  <div>
+    <input type="button" name="deckshuffle" value="Shuffle" id="btnShuffle"/>
+  </div>
+  <div>
+    <input type="button" name="drawacard" value="Draw A Card" id="btnDrawACard"/>
+  </div>
 </div>
-<div>
-  <input type="button" name="deckdeal" value="Deal Hand" id="btnDealHand"/>
-</div>
-<div>
-  <input type="button" name="deckshuffle" value="Shuffle" id="btnShuffle"/>
-</div>
-<div>
-  <input type="button" name="drawacard" value="Draw A Card" id="btnDrawACard"/>
-</div>
+
+
+  
+  
+  

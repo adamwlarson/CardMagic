@@ -1,3 +1,15 @@
 body {
   background-color: #000;
 }
+
+.cardmagic_playingboard .playmat
+{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1280px;
+  height: 900px;
+  vertical-align: middle;
+  max-width: 125;
+  z-index: -2;
+}

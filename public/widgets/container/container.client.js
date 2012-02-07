@@ -17,7 +17,7 @@ feather.ns("cardmagic");
       },
       alignCardInContainer: function( container, obj, cardNum ) {
         //Variables to help space the card in the container
-        var topSpacing = 25;
+        var topSpacing = 10;
         var sideSpacing = 10;
         var cardWidth = 100;
 

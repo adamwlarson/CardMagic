@@ -18,6 +18,10 @@ feather.ns("cardmagic");
         //I want to be able to have a generic container that changes based on where its used
         me.p1LandContainer.setContainerClass( "p1Land" );
         me.p1HandContainer.setContainerClass( "p1Hand" );
+        me.p1GraveYardContainer.setContainerClass( "p1GraveYard" );
+        me.p1InPlayContainer.setContainerClass( "p1InPlay" );
+        me.p2InPlayContainer.setContainerClass( "p2InPlay" );
+        me.p2LandContainer.setContainerClass( "p2Land" );
 
         //Load the Deck
         me.domEvents.bind( me.get( "#btnLoadDeck" ), "click", function( ) {
@@ -49,6 +53,29 @@ feather.ns("cardmagic");
         me.domEvents.bind( me.get( "#btnShuffle" ), "click", function( ) {
           me.p1Deck.shuffle( );
         });//End Bind
+      }
+    }
+  });
+})();
+
+/* ========== playingboard.client.js ========== */
+
+feather.ns("cardmagic");
+(function() {
+  cardmagic.playingboard = feather.Widget.create({
+    name: "cardmagic.playingboard",
+    path: "widgets/playingboard/",
+    prototype: {
+      onInit: function() {
+        
+      },
+      onReady: function() {
+        //Test animating colors
+        $('body').animate( 
+        {
+          'background-color': "#8F8"
+        },
+        1000 );
       }
     }
   });
@@ -266,29 +293,6 @@ feather.ns("cardmagic");
   });
 })();
 
-/* ========== playingboard.client.js ========== */
-
-feather.ns("cardmagic");
-(function() {
-  cardmagic.playingboard = feather.Widget.create({
-    name: "cardmagic.playingboard",
-    path: "widgets/playingboard/",
-    prototype: {
-      onInit: function() {
-        
-      },
-      onReady: function() {
-        //Test animating colors
-        $('body').animate( 
-        {
-          'background-color': "#8F8"
-        },
-        1000 );
-      }
-    }
-  });
-})();
-
 /* ========== handofcards.client.js ========== */
 
 feather.ns("cardmagic");
@@ -340,7 +344,7 @@ feather.ns("cardmagic");
       },
       alignCardInContainer: function( container, obj, cardNum ) {
         //Variables to help space the card in the container
-        var topSpacing = 25;
+        var topSpacing = 10;
         var sideSpacing = 10;
         var cardWidth = 100;
 
