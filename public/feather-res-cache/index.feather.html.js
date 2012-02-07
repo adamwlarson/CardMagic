@@ -13,6 +13,7 @@ feather.ns("cardmagic");
       },
       onReady: function() {
         var me = this;
+        alert("ready");
 
         //Is there a better way to do this?
         //I want to be able to have a generic container that changes based on where its used
