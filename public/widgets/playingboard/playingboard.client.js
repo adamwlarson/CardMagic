@@ -8,6 +8,7 @@ feather.ns("cardmagic");
         
       },
       onReady: function() {
+        //Test animating colors
         $('body').animate( 
         {
           'background-color': "#8F8"

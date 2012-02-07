@@ -10,6 +10,8 @@
   padding: 0px;
 }
 
+
+
 /* ========== deckofcards.css ========== */
 
 .cardmagic_deckofcards .p1deck
@@ -40,12 +42,6 @@
   max-width: 125;
 }
 
-.cardmagic_card .largeCard
-{
-  width: 200px;
-  height: 300px;
-}
-
 /* ========== playingboard.css ========== */
 
 body {
@@ -54,105 +50,21 @@ body {
 
 /* ========== handofcards.css ========== */
 
-.cardmagic_handofcards .p1hand_1
-{
-  position: absolute;
-  left: 200px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
 
-.cardmagic_handofcards .p1hand_2
-{
-  position: absolute;
-  left: 310px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_3
-{
-  position: absolute;
-  left: 420px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_4
-{
-  position: absolute;
-  left: 530px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_5
-{
-  position: absolute;
-  left: 640px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_6
-{
-  position: absolute;
-  left: 750px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_7
-{
-  position: absolute;
-  left: 860px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_8
-{
-  position: absolute;
-  left: 970px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_9
-{
-  position: absolute;
-  left: 1080px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
-
-.cardmagic_handofcards .p1hand_10
-{
-  position: absolute;
-  left: 1190px;
-  bottom: 50px;
-  padding: 0px;
-  opacity: 1;
-}
 
 /* ========== container.css ========== */
 
 .cardmagic_container .p1Land
 {
   position: absolute;
-  bottom: 200px;
+  bottom: 250px;
   height: 200px;
   width: 80%;
   left: 200px;
+  border-style:solid;
+  border-width:2px;
+  border-color:black;
+  z-index: -1;
 }
 
 .cardmagic_container .p2Land
@@ -162,6 +74,10 @@ body {
   height: 200px;
   width: 100%;
   left: 200px;
+  border-style:solid;
+  border-width:2px;
+  border-color:black;
+  z-index: 1;
 }
 
 .cardmagic_container .p1GraveYard
@@ -171,6 +87,10 @@ body {
   height: 200px;
   width: 100%;
   left: 200px;
+  border-style:solid;
+  border-width:2px;
+  border-color:black;
+  z-index: -1;
 }
 
 .cardmagic_container .p2GraveYard
@@ -180,4 +100,34 @@ body {
   height: 200px;
   width: 100%;
   left: 200px;
+  border-style:solid;
+  border-width:2px;
+  border-color:black;
+  z-index: -1;
+}
+
+.cardmagic_container .p1Hand
+{
+  position: absolute;
+  bottom: 0px;
+  height: 200px;
+  width: 80%;
+  left: 200px;
+  border-style:solid;
+  border-width:2px;
+  border-color:black;
+  z-index: -1;
+}
+
+.cardmagic_container .p2Hand
+{
+  position: absolute;
+  bottom: 0px;
+  height: 200px;
+  width: 80%;
+  left: 200px;
+  border-style:solid;
+  border-width:2px;
+  border-color:black;
+  z-index: -1;
 }

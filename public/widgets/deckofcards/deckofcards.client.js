@@ -85,12 +85,12 @@ feather.ns("cardmagic");
         var me = this;
         me.wipeCardData( );
         me.saveCardWidgets( );
-        $.getJSON( "decklists/deck1.JSON", function(data){
+        //TODO pull in the JSON file from deckbox API
+        $.getJSON( "decklists/deck1.JSON", function(data) {
           $.each(data.deck.card, function( i, s ) {
             //Load the image
             var imagefile = me.loadCard( s.filename );
-            for( var j = 0; j < s.quantity; j++ )
-            {
+            for( var j = 0; j < s.quantity; j++ ) {
               //Generate a new card
               var deckSize = currentFullDeck.length;
               currentFullDeck[deckSize] = new createCard( s.filename, s.name, 

@@ -2,7 +2,57 @@
 
 /* ========== app.client.js ========== */
 
+feather.ns("cardmagic");
+(function() {
+  cardmagic.app = feather.Widget.create({
+    name: "cardmagic.app",
+    path: "widgets/app/",
+    prototype: {
+      onInit: function() {
+        
+      },
+      onReady: function() {
+        var me = this;
 
+        //Is there a better way to do this?
+        //I want to be able to have a generic container that changes based on where its used
+        me.p1LandContainer.setContainerClass( "p1Land" );
+        me.p1HandContainer.setContainerClass( "p1Hand" );
+
+        //Load the Deck
+        me.domEvents.bind( me.get( "#btnLoadDeck" ), "click", function( ) {
+          me.p1Deck.loadDeck( );
+          me.p1Hand.resetHand( );
+        });//End Bind
+
+        //Draw a New Card
+        me.domEvents.bind( me.get( "#btnDrawACard" ), "click", function( ) {
+          me.p1Hand.dealCard( me.p1Deck.grabTopCard( ), 0 );
+        });//End Bind
+
+        //Deal a New Hand
+        me.domEvents.bind( me.get( "#btnDealHand" ), "click", function( ) {
+          if( me.p1Deck.numCards( ) < 60 ) {
+            alert( "Invalid Deck Size. Please Import valid deck." );
+            return;
+          }
+          me.p1Hand.resetHand( );
+
+          //Now actually deal
+          var NUM_CARDS = 7;
+          for( var i = 0; i < NUM_CARDS; i++ ) {
+            me.p1Hand.dealCard( me.p1Deck.grabTopCard( ),0 );
+          }
+        });//End Bind
+
+        //Shuffle the Deck
+        me.domEvents.bind( me.get( "#btnShuffle" ), "click", function( ) {
+          me.p1Deck.shuffle( );
+        });//End Bind
+      }
+    }
+  });
+})();
 
 /* ========== deckofcards.client.js ========== */
 
@@ -93,12 +143,12 @@ feather.ns("cardmagic");
         var me = this;
         me.wipeCardData( );
         me.saveCardWidgets( );
-        $.getJSON( "decklists/deck1.JSON", function(data){
+        //TODO pull in the JSON file from deckbox API
+        $.getJSON( "decklists/deck1.JSON", function(data) {
           $.each(data.deck.card, function( i, s ) {
             //Load the image
             var imagefile = me.loadCard( s.filename );
-            for( var j = 0; j < s.quantity; j++ )
-            {
+            for( var j = 0; j < s.quantity; j++ ) {
               //Generate a new card
               var deckSize = currentFullDeck.length;
               currentFullDeck[deckSize] = new createCard( s.filename, s.name, 
@@ -131,8 +181,7 @@ feather.ns("cardmagic");
       onInit: function() {
         
       },
-      dealCardAnim: function(pos,bTop)
-      {
+      dealCardAnim: function(pos,bTop) {
         var topPos = 0;
         var leftPos = ( pos * 110 ) + 100;
         this.get( "#smallCard" ).animate({
@@ -153,53 +202,49 @@ feather.ns("cardmagic");
         var bEnlarged = false;
 
 
-        me.get("#smallCard").draggable({
+        me.get("#smallCard").draggable( {
           revert: "invalid"
         });
-        me.get("#smallCard").draggable({containment:'window'});
+        me.get("#smallCard").draggable( {containment:'window'} );
         me.get("#smallCard").draggable( {distance:15} );
+        me.get("#smallCard").draggable( {stack:'true'} );
 
-        //Bind an event to make each card scale to the large card size
+        //Bind an event to make each card highlight or scale
         me.domEvents.bind( me.get( "#smallCard"), "mouseenter", function( ) {
           if( bEnlarged ) return;
-          me.get( "#smallCard" ).animate( 
-          {
-            width: '125px',
-            height: '175px',
+          me.get("#smallCard").css('border', "solid 2px yellow" );
+          me.get( "#smallCard" ).animate( {
             zIndex: 50000
           }, 10 ); 
-        });
+        });//End Bind
 
+        //Turn off border and set this back to a normal zIndex
         me.domEvents.bind( me.get( "#smallCard"), "mouseout", function( ) {
           if( bEnlarged ) return;
-          me.get( "#smallCard" ).animate( 
-          {
-            width: '100px',
-            height: '150px',
+          me.get("#smallCard").css('border', "solid 0px yellow" );
+          me.get( "#smallCard" ).animate( {
             zIndex: 1
           }, 10 ); 
-        });
+        });//End Bind
 
+        //Scale the card up for reading
         me.domEvents.bind( me.get( "#smallCard"), "dblclick", function( ) {
           bEnlarged = !bEnlarged;
           if( bEnlarged ) {
-            me.get( "#smallCard" ).animate( 
-            {
-              width: '400',
-              height: '600',
+            me.get( "#smallCard" ).animate( {
               zIndex: 50000
             }, 10 ); 
           } else {
             
-            me.get( "#smallCard" ).animate( 
-            {
+            me.get( "#smallCard" ).animate( {
               width: '100px',
               height: '150px',
               zIndex: 1
             }, 10 ); 
           }
-        });
+        });//End Bind
 
+        //Flip the card when clicked
         me.domEvents.bind( me.get( "#smallCard"), "click", function( ) {
           bFlipped = !bFlipped;
           var flipAmount = 0;
@@ -208,13 +253,14 @@ feather.ns("cardmagic");
           }
 
           //Wow i bet theres a plugin for rotations as well since it has to be handled across all browsers
+          //TODO: Look for a jQuery plugin that handles this nicely!!!
           me.get( "#smallCard" ).css( { '-webkit-transform': 'rotate(' + flipAmount + 'deg)' } );
           me.get( "#smallCard" ).css( { 'transform': 'rotate(' + flipAmount + 'deg)' } );
           me.get( "#smallCard" ).css( { '-moz-transform': 'rotate(' + flipAmount + 'deg)' } );
           me.get( "#smallCard" ).css( { '-ms-transform': 'rotate(' + flipAmount + 'deg)' } );
           me.get( "#smallCard" ).css( { '-o-transform': 'rotate(' + flipAmount + 'deg)' } );
           me.get( "#smallCard" ).effect( "shake", { times: 1, distance: 5, direction: "up" }, 100 );
-        });
+        });//End Bind
       }
     }
   });
@@ -232,6 +278,7 @@ feather.ns("cardmagic");
         
       },
       onReady: function() {
+        //Test animating colors
         $('body').animate( 
         {
           'background-color': "#8F8"
@@ -274,3 +321,75 @@ feather.ns("cardmagic");
 
 /* ========== container.client.js ========== */
 
+feather.ns("cardmagic");
+(function() {
+  cardmagic.container = feather.Widget.create({
+    name: "cardmagic.container",
+    path: "widgets/container/",
+    prototype: {
+      onInit: function() {
+        
+      },
+      setContainerClass: function( name ) {
+        this.get("#backgroundbox").addClass( name );
+      },
+      alignCardsInContainer: function( container, cardArray ) {
+        for( var j = 0; j < cardArray.length; j++ ) {
+          this.alignCardInContainer( container, cardArray[j], j);
+        }
+      },
+      alignCardInContainer: function( container, obj, cardNum ) {
+        //Variables to help space the card in the container
+        var topSpacing = 25;
+        var sideSpacing = 10;
+        var cardWidth = 100;
+
+        var topOffset = container.offset().top - obj.offset().top;
+        topOffset += ( obj.position().top + topSpacing );
+        var leftOffset = container.offset().left - obj.offset().left;
+        leftOffset += ( obj.position().left + sideSpacing );
+        leftOffset += ( cardNum ) * ( cardWidth + sideSpacing );
+
+        //Move the card to that position
+        obj.animate( {
+            top: topOffset,
+            left: leftOffset
+          }, 300);
+      },
+      onReady: function() {
+        var me = this;
+        var itemsInContainer = [];
+        this.get("#backgroundbox").droppable( {
+          drop: function(event, ui) {
+            //See if item is in list, remove it and add it to the end
+            //TODO: insert into the location it is dropped rather than just the end!
+            for( var i = 0; i < itemsInContainer.length; i++ ) {
+              if( itemsInContainer[i] == ui.draggable ) {
+                itemsInContainer.splice(i,1);
+                break;
+              }
+            }
+            itemsInContainer[itemsInContainer.length] = ui.draggable;
+            me.alignCardsInContainer( $(this), itemsInContainer );
+          },
+          over: function(event, ui) {
+
+          },
+          out: function(events, ui) {
+            //Using the revert option on the draggable causes some issues when a valid container
+            //isn't found, and therefore the card isn't added to a container, I need to find a solution
+            //around this problem
+            for( var i = 0; i < itemsInContainer.length; i++ ) {
+              if( itemsInContainer[i] == ui.draggable ) {
+                //Remove this item
+                itemsInContainer.splice(i,1);
+              }
+            }
+            //Align all cards
+            me.alignCardsInContainer( $(this), itemsInContainer );
+          }
+        });
+      }
+    }
+  });
+})();
