@@ -11,6 +11,7 @@ feather.ns("cardmagic");
       },
       dealCardAnim: function(pos,bTop) {
         var me = this;
+        
         var topPos = 0;
         var leftPos = ( pos * 110 ) + 100;
         this.get( "#smallCard" ).animate({
