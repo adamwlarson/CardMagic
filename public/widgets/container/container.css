@@ -1,7 +1,7 @@
 .cardmagic_container .p1Land
 {
   position: absolute;
-  bottom: 165px;
+  top: 570px;
   height: 175px;
   width: 850px;
   left: 200px;
@@ -14,7 +14,7 @@
 .cardmagic_container .p2Land
 {
   position: absolute;
-  bottom: 720px;
+  top: 10px;
   height: 175px;
   width: 850px;
   left: 200px;
@@ -27,7 +27,7 @@
 .cardmagic_container .p1GraveYard
 {
   position: absolute;
-  bottom: 10px;
+  top: 720px;
   height: 175px;
   width: 130px;
   left: 1100px;
@@ -53,7 +53,7 @@
 .cardmagic_container .p1Hand
 {
   position: absolute;
-  bottom: 10px;
+  top: 720px;
   height: 175px;
   width: 850px;
   left: 200px;
@@ -79,7 +79,7 @@
 .cardmagic_container .p1InPlay
 {
   position: absolute;
-  bottom: 320px;
+  top: 410px;
   height: 175px;
   width: 850px;
   left: 200px;
@@ -92,7 +92,7 @@
 .cardmagic_container .p2InPlay
 {
   position: absolute;
-  bottom: 530px;
+  top: 215px;
   height: 175px;
   width: 850px;
   left: 200px;

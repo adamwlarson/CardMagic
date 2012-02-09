@@ -12,7 +12,6 @@ feather.ns("cardmagic");
         cardsInHand = [];
       },
       dealCard: function( newCard, nPlayerId ) {
-
         //nPlayerId 0 = Player1, 1 = Player2
         //Need a way to determine which player we are and then display this correctly
         cardsInHand.push( newCard );

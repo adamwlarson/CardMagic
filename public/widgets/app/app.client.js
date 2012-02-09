@@ -49,6 +49,11 @@ feather.ns("cardmagic");
         me.domEvents.bind( me.get( "#btnShuffle" ), "click", function( ) {
           me.p1Deck.shuffle( );
         });//End Bind
+
+        //Disable Context "right click menu"
+        me.domEvents.bind( $(document), "contextmenu", function( events ) {
+          return false;
+        });
       }
     }
   });

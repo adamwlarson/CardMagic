@@ -25,20 +25,21 @@ feather.ns("cardmagic");
       onInit: function( ) {
         //onInit
       },
-      saveCardWidgets: function( ) {
-        //Is there a better way to reference these without storing as an array?
-        cardWidgets = [this.card1, this.card2, this.card3, this.card4, this.card5,
-                       this.card6, this.card7, this.card8, this.card9, this.card10,
-                       this.card11, this.card12, this.card13,this.card14, this.card15,
-                       this.card16, this.card17, this.card18, this.card19, this.card20,
-                       this.card21, this.card22, this.card23, this.card24, this.card25,
-                       this.card26, this.card27, this.card28, this.card29, this.card30,
-                       this.card31, this.card32, this.card33, this.card34, this.card35,
-                       this.card36, this.card37, this.card38, this.card39, this.card40,
-                       this.card41, this.card42, this.card43, this.card44, this.card45,
-                       this.card46, this.card47, this.card48, this.card49, this.card50,
-                       this.card51, this.card52, this.card53, this.card54, this.card55,
-                       this.card56, this.card57, this.card58, this.card59, this.card60];
+      createCardWidget: function( _cb ) {
+        var me = this;
+        feather.Widget.load( {
+          path: "widgets/card/",
+          clientOptions: {
+            parent: this,
+            keepContainerOnDispose: true,
+            container: $("<div class='p1deck'> </div>").prependTo( me.get( "#p1Deck" ) ),
+            onceState: {
+              ready: function( ) {
+                _cb( this );
+              }
+            }
+          }
+        });
       },
       resetCards: function( ) {
         //This is called on a shuffle or re-deal, loading wipes all this
@@ -62,6 +63,7 @@ feather.ns("cardmagic");
         graveYard = [];
         unusedCards = [];
         exiledCards = [];
+        cardWidgets = [];
       },
       shuffle: function( ) {
         if( unusedCards.length == 0 )
@@ -83,8 +85,8 @@ feather.ns("cardmagic");
       },
       loadDeck: function( ) {
         var me = this;
+        var totalDeckSize = 0;
         me.wipeCardData( );
-        me.saveCardWidgets( );
         //TODO pull in the JSON file from deckbox API
         $.getJSON( "decklists/deck1.JSON", function(data) {
           $.each(data.deck.card, function( i, s ) {
@@ -92,15 +94,25 @@ feather.ns("cardmagic");
             var imagefile = me.loadCard( s.filename );
             for( var j = 0; j < s.quantity; j++ ) {
               //Generate a new card
-              var deckSize = currentFullDeck.length;
-              currentFullDeck[deckSize] = new createCard( s.filename, s.name, 
+              totalDeckSize += 1;
+              me.createCardWidget( function( obj ) {
+                var deckSize = currentFullDeck.length;
+                //Save the created widget and then create the card data
+                cardWidgets[cardWidgets.length] = obj;
+                currentFullDeck[deckSize] = new createCard( s.filename, s.name, 
                                                                       s.attack, s.defense,
                                                                       s.type, imagefile,
-                                                                      (cardWidgets[deckSize] ) );
+                                                                      obj );
+                if( totalDeckSize == currentFullDeck.length )
+                {
+                  //Finished Loading the deck reset cards and display deck total
+                  me.resetCards( );
+                  alert( "Deck Size: " + totalDeckSize );
+                } 
+              });
             }
+            
           });
-          alert( "Number of Cards in Deck " + currentFullDeck.length );
-          me.resetCards( );
         });
       },
       onReady: function() {
