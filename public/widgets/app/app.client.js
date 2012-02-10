@@ -47,8 +47,6 @@ feather.ns("cardmagic");
             var newCard = me.p1Deck.grabTopCard( );
             me.p1Hand.dealCard( newCard,0 );
             newCard.widget.setStartContainer( me.p1HandContainer );
-            //alert(newCard.widget.children);
-            //me.p1HandContainer.addCard( $(newCard.widget.parent) );
           }
         });//End Bind
 
@@ -57,10 +55,15 @@ feather.ns("cardmagic");
           me.p1Deck.shuffle( );
         });//End Bind
 
+        //Untap all cards
+        me.domEvents.bind( me.get( "#btnUnTap" ), "click", function( ) {
+          me.p1Deck.untapAllCards( );
+        }); //End Bind
+
         //Disable Context "right click menu"
         me.domEvents.bind( $(document), "contextmenu", function( events ) {
           return false;
-        });
+        });//End Bind
       }
     }
   });

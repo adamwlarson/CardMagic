@@ -41,6 +41,11 @@ feather.ns("cardmagic");
           }
         });
       },
+      untapAllCards: function( ) {
+        for( var i = 0; i < currentFullDeck.length; i++ ) {
+          currentFullDeck[i].widget.untapCard( );
+        }
+      },
       resetCards: function( ) {
         //This is called on a shuffle or re-deal, loading wipes all this
         unusedCards = currentFullDeck.slice(0);

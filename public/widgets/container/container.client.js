@@ -22,7 +22,7 @@ feather.ns("cardmagic");
       alignCardInContainer: function( container, obj, cardNum, cardArray ) { 
 
         var containerWidth = parseInt( this.get( "#backgroundbox" ).css( 'width' ), 10 );
-        cardNum = this.enableAutoSpacing ? cardNum : 0;
+        var cardPos = this.enableAutoSpacing ? cardNum : 0;
 
         //Variables to help space the card in the container
         var topSpacing = 10,
@@ -41,7 +41,7 @@ feather.ns("cardmagic");
         leftOffset += ( obj.position().left + sideSpacing );
 
         if( totalCardSpacing < containerWidth ) {
-          leftOffset += ( cardNum ) * ( cardWidth + sideSpacing );
+          leftOffset += ( cardPos ) * ( cardWidth + sideSpacing );
         } else {
           //Need to start overlapping
           //Calculate the overlap amount
@@ -50,7 +50,7 @@ feather.ns("cardmagic");
           amountOfOverlapNeeded /= ( numOfOverlaps );
           //Now adjust the cards to slightly overlap
           //Also remember the spacing is calcuated into this so 
-          leftOffset += ( cardNum ) * ( cardWidth + sideSpacing ) - ( ( cardNum ) * amountOfOverlapNeeded );
+          leftOffset += ( cardPos ) * ( cardWidth + sideSpacing ) - ( ( cardPos ) * amountOfOverlapNeeded );
         }
         //Move the card to that position
         obj.animate( {
@@ -70,7 +70,7 @@ feather.ns("cardmagic");
 
         var currentBestDist = 999999;
         var currentBestInsertIdx = me.itemsInContainer.length;
-        if( fromDrop ) {
+        if( fromDrop && this.enableAutoSpacing ) {
           for( var i = 0; i < me.itemsInContainer.length; i++ ) {
             var dist = me.itemsInContainer[i].offset( ).left - card.offset( ).left;
             if( Math.abs( dist ) < currentBestDist ) {

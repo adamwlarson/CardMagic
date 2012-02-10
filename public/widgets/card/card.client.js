@@ -11,6 +11,12 @@ feather.ns("cardmagic");
       onInit: function() {
         this.myZIndex = 0;
       },
+      untapCard: function( ) {
+        this.fsm.fire('untap');
+      },
+      testMsg: function( ) {
+        alert( "Hi" );
+      },
       setStartContainer: function( container ) {
         //This sets up which container the card is started in, this could be saved eventually
         //To handle the case when the card is dropped invalidly
@@ -119,6 +125,9 @@ feather.ns("cardmagic");
               },
               viewCard: function( ) {
                 return this.states.zoomed;
+              },
+              untap: function( ) {
+                return this.states.untapped;
               }
             },
             zoomed: {
