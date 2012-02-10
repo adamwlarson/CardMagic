@@ -2,23 +2,19 @@ feather.ns("cardmagic");
 (function() {
   var backImage = "images/Card Back.jpg";
   var frontImage = "images/Card Back.jpg";
+
+
   cardmagic.card = feather.Widget.create({
     name: "cardmagic.card",
     path: "widgets/card/",
     prototype: {
       onInit: function() {
-        
+        this.myZIndex = 0;
       },
-      dealCardAnim: function(pos,bTop) {
-        var me = this;
-        var topPos = 0;
-        var leftPos = ( pos * 110 ) + 100;
-        this.get( "#smallCard" ).animate({
-          left: leftPos,
-          top: topPos
-        },100, null, function() {
-          me.fsm.fire('dealt');
-        } );
+      setStartContainer: function( container ) {
+        //This sets up which container the card is started in, this could be saved eventually
+        //To handle the case when the card is dropped invalidly
+        container.addCard( this.get( "#smallCard" ) );
       },
       cardRotate: function( amount ) {
         //Wow i bet theres a plugin for rotations as well since it has to be handled across all browsers
@@ -31,21 +27,24 @@ feather.ns("cardmagic");
         this.get( "#smallCard" ).effect( "shake", { times: 1, distance: 5, direction: "up" }, 100 );
       },
       cardMouseEvent: function( enter ) {
+        var currentZIndex = this.get( "#smallCard" ).css( 'z-index' );
+        var maxZValue = 100;
         if( enter ){
+          this.myZIndex = ( currentZIndex != maxZValue ) ? currentZIndex : this.myZIndex;
           this.get("#smallCard").css('border', "solid 2px yellow" );
-          this.get( "#smallCard" ).animate( {
-            zIndex: 50000
-          }, 10 ); 
+          this.get("#smallCard").css('z-index', maxZValue );
         } else {
+          if( currentZIndex == maxZValue ) {
+            currentZIndex = this.myZIndex;
+          }
           this.get("#smallCard").css('border', "solid 0px yellow" );
-          this.get( "#smallCard" ).animate( {
-            zIndex: 1
-          }, 10 ); 
+          this.get("#smallCard").css('z-index', currentZIndex );
         }
       },
       setInfo: function(data) {
         frontImage = "images/"+data.filename+".jpg";
         this.get("#smallCard").attr("src", frontImage );
+        this.fsm.fire('dealt');
       },
       flipCard: function( ) {
         this.get("#smallCard").attr("src", backImage );
@@ -56,7 +55,7 @@ feather.ns("cardmagic");
             containment: 'window',
             distance: 15,
             opacity: 1
-          });
+        });
       },
       makeDraggable: function(draggable) {
         var me = this;
@@ -66,10 +65,6 @@ feather.ns("cardmagic");
           me.get("#smallCard").draggable("option", 'opacity', 1.0 );
           me.get("#smallCard").draggable("option", 'disabled', true );
         }
-      },
-      deal: function() {
-        this.dealCardAnim();
-        this.fsm.fire('dealt');
       },
       onReady: function() {
         var me = this;

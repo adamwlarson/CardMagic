@@ -18,6 +18,7 @@ feather.ns("cardmagic");
         me.p1InPlayContainer.setContainerClass( "p1InPlay" );
         me.p2InPlayContainer.setContainerClass( "p2InPlay" );
         me.p2LandContainer.setContainerClass( "p2Land" );
+        me.p1GraveYardContainer.setAutoSpacing( false );
 
         //Load the Deck
         me.domEvents.bind( me.get( "#btnLoadDeck" ), "click", function( ) {
@@ -27,7 +28,9 @@ feather.ns("cardmagic");
 
         //Draw a New Card
         me.domEvents.bind( me.get( "#btnDrawACard" ), "click", function( ) {
-          me.p1Hand.dealCard( me.p1Deck.grabTopCard( ), 0 );
+          var newCard = me.p1Deck.grabTopCard( );
+          me.p1Hand.dealCard( newCard,0 );
+          newCard.widget.setStartContainer( me.p1HandContainer );
         });//End Bind
 
         //Deal a New Hand
@@ -41,7 +44,11 @@ feather.ns("cardmagic");
           //Now actually deal
           var NUM_CARDS = 7;
           for( var i = 0; i < NUM_CARDS; i++ ) {
-            me.p1Hand.dealCard( me.p1Deck.grabTopCard( ),0 );
+            var newCard = me.p1Deck.grabTopCard( );
+            me.p1Hand.dealCard( newCard,0 );
+            newCard.widget.setStartContainer( me.p1HandContainer );
+            //alert(newCard.widget.children);
+            //me.p1HandContainer.addCard( $(newCard.widget.parent) );
           }
         });//End Bind
 

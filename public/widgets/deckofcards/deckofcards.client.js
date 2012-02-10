@@ -84,6 +84,7 @@ feather.ns("cardmagic");
         return unusedCards.length;
       },
       loadDeck: function( ) {
+        debugger;
         var me = this;
         var totalDeckSize = 0;
         me.wipeCardData( );
