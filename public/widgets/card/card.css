@@ -5,3 +5,50 @@
   vertical-align: middle;
   max-width: 125;
 }
+
+.cardmagic_card .dropdown
+{
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  background: #e4dfcb;
+  background-repeat: no-repeat;
+  display: block;
+  padding-right: 20px;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #d4ca9a;
+  width: 150px;
+  left: 0px;
+  z-index: 200;
+  top: 0px;
+}
+
+.cardmagic_card .dropdown dd ul
+{
+  background: #e4dfcb;
+  background-position: 0px 5px;
+  background-repeat: no-repeat;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  display: none;
+  list-style-type: none;
+  padding: 0px;
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  width: auto;
+  min-width: 20px;
+  line-height: 1em;
+  z-index: 200;
+}
+
+.cardmagic_card .dropdown dd ul li
+{
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  width: 75px;
+  z-index: 200;
+}

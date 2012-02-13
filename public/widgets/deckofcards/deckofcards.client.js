@@ -42,7 +42,6 @@ feather.ns("cardmagic");
         });
       },
       setCurrentSelectedCard: function( filename ) {
-        //alert( "setCurrentSelectedCard" + filename );
         this.fire( "previewCard", filename );
       },
       untapAllCards: function( ) {

@@ -1,18 +1,32 @@
 feather.ns("cardmagic");
 (function() {
-  var backImage = "images/Card Back.jpg";
-  var frontImage = "images/Card Back.jpg";
-
-
   cardmagic.card = feather.Widget.create({
     name: "cardmagic.card",
     path: "widgets/card/",
     prototype: {
       onInit: function() {
         this.myZIndex = 0;
+        this.isFlipped = true; //Back up
+        this.frontImage = "images/Card Back.jpg";
+        this.backImage = "images/Card Back.jpg";
       },
       untapCard: function( ) {
         this.fsm.fire('untap');
+      },
+      toggleMenu: function( show ) {
+        var me = this;
+        if( show ) {
+          //alert( me.get( "#smallCard" ).offset( ).top );
+          me.get(".dropdown").show();
+          me.get(".dropdown dd ul").show( );
+          me.get( ".dropdown" ).offset( {
+            top: me.get( "#smallCard" ).offset( ).top - 100,
+            left: me.get( "#smallCard" ).offset( ).left
+          } );
+        } else {
+          me.get(".dropdown").hide();
+          me.get(".dropdown dd ul").hide( );
+        }
       },
       setStartContainer: function( container ) {
         //This sets up which container the card is started in, this could be saved eventually
@@ -31,27 +45,23 @@ feather.ns("cardmagic");
       },
       cardMouseEvent: function( enter ) {
         var currentZIndex = this.get( "#smallCard" ).css( 'z-index' );
-        var maxZValue = 100;
         if( enter ){
           this.fire( "cardSelected", this.get( "#smallCard" ).attr( "src") );
-          this.myZIndex = ( currentZIndex != maxZValue ) ? currentZIndex : this.myZIndex;
           this.get("#smallCard").css('border', "solid 2px yellow" );
-          this.get("#smallCard").css('z-index', maxZValue );
         } else {
-          if( currentZIndex == maxZValue ) {
-            currentZIndex = this.myZIndex;
-          }
           this.get("#smallCard").css('border', "solid 0px yellow" );
-          this.get("#smallCard").css('z-index', currentZIndex );
         }
       },
       setInfo: function(data) {
-        frontImage = "images/"+data.filename+".jpg";
-        this.get("#smallCard").attr("src", frontImage );
+        this.frontImage = "images/"+data.filename+".jpg";
+        this.get("#smallCard").attr("src", this.frontImage );
+        this.isFlipped = false; //Automatically flip face up
         this.fsm.fire('dealt');
       },
       flipCard: function( ) {
-        this.get("#smallCard").attr("src", backImage );
+        this.isFlipped = !this.isFlipped;
+        var img = this.isFlipped ? this.backImage : this.frontImage;
+        this.get("#smallCard").attr("src", img );
       },
       initializeDraggable: function( ) {
         this.get("#smallCard").draggable( {
@@ -72,14 +82,10 @@ feather.ns("cardmagic");
       },
       onReady: function() {
         var me = this;
-
-        me.get( "#cardMenu" ).menu( {
-          disabled: true
-        } );
-
-        me.get( "#cardMenu" ).hide( );
+        var menuVisible = false;
 
         me.initializeDraggable( );
+        me.get(".dropdown").hide();
 
         me.fsm = new feather.FiniteStateMachine({
           states: {
@@ -106,7 +112,7 @@ feather.ns("cardmagic");
               mouseout: function() {
                 me.cardMouseEvent( false );
               },
-              click: function() {
+              tap: function() {
                 return this.states.tapped;
               },
               viewCard: function( ) {
@@ -123,7 +129,7 @@ feather.ns("cardmagic");
               mouseout: function() {
                 me.cardMouseEvent( false );
               },
-              click: function() {
+              untap: function() {
                 
                 return this.states.untapped;
               },
@@ -158,7 +164,8 @@ feather.ns("cardmagic");
               }
             }
           }
-        });        
+        });
+      
 
         //Bind an event to make each card highlight or scale
         me.domEvents.bind( me.get( "#smallCard"), "mouseenter", function( ) {
@@ -167,14 +174,37 @@ feather.ns("cardmagic");
 
         //Bind a right click event
         me.domEvents.bind( me.get( "#smallCard" ), "mousedown", function( events ) {
+          //Right click event
           /*if( events.which == 3 ){
             me.fsm.fire( "viewCard" );
           }*/
         });//End Bind
 
+        //Untap
+        me.domEvents.bind( me.get( "#untapCard" ), "click", function( ) {
+          menuVisible = false;
+          me.toggleMenu( menuVisible );
+          me.fsm.fire( "untap" );
+        });//End Bind
+
+        //Untap
+        me.domEvents.bind( me.get( "#tapCard" ), "click", function( ) {
+          menuVisible = false;
+          me.toggleMenu( menuVisible );
+          me.fsm.fire( "tap" );
+        });//End Bind
+
+        //Turn over
+        me.domEvents.bind( me.get( "#flipCard" ), "click", function( ) {
+          menuVisible = false;
+          me.toggleMenu( menuVisible );
+          me.flipCard( );
+        });
+
         //Turn off border and set this back to a normal zIndex
         me.domEvents.bind( me.get( "#smallCard"), "mouseout", function( ) {
           me.fsm.fire("mouseout");
+          //me.toggleMenu( false );
         });//End Bind
 
         //Scale the card up for reading
@@ -184,7 +214,9 @@ feather.ns("cardmagic");
 
         //Flip the card when clicked
         me.domEvents.bind( me.get( "#smallCard"), "click", function( ) {
-          me.fsm.fire("click");
+          //me.fsm.fire("click");
+          menuVisible = !menuVisible;
+          me.toggleMenu( menuVisible );
         });//End Bind
       }
     }
