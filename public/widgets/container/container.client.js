@@ -41,7 +41,7 @@ feather.ns("cardmagic");
         leftOffset += ( obj.position().left + sideSpacing );
 
         if( totalCardSpacing < containerWidth ) {
-          leftOffset += ( cardPos ) * ( cardWidth + sideSpacing );
+          leftOffset += ( cardPos ) * ( cardWidth + sideSpacing ) + ( (containerWidth - totalCardSpacing) / 2 );
         } else {
           //Need to start overlapping
           //Calculate the overlap amount

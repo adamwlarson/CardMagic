@@ -35,7 +35,7 @@ feather.ns("cardmagic");
 
         //Deal a New Hand
         me.domEvents.bind( me.get( "#btnDealHand" ), "click", function( ) {
-          if( me.p1Deck.numCards( ) < 60 ) {
+          if( me.p1Deck.numCards( ) <= 0 ) {
             alert( "Invalid Deck Size. Please Import valid deck." );
             return;
           }
@@ -64,6 +64,12 @@ feather.ns("cardmagic");
         me.domEvents.bind( $(document), "contextmenu", function( events ) {
           return false;
         });//End Bind
+
+        //Bind preview change
+        me.p1Deck.on( "previewCard", function( data ) {
+          //alert( data );
+          me.p1Preview.setInfo( data );
+        } );
       }
     }
   });

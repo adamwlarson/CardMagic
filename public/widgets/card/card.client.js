@@ -14,9 +14,6 @@ feather.ns("cardmagic");
       untapCard: function( ) {
         this.fsm.fire('untap');
       },
-      testMsg: function( ) {
-        alert( "Hi" );
-      },
       setStartContainer: function( container ) {
         //This sets up which container the card is started in, this could be saved eventually
         //To handle the case when the card is dropped invalidly
@@ -36,6 +33,7 @@ feather.ns("cardmagic");
         var currentZIndex = this.get( "#smallCard" ).css( 'z-index' );
         var maxZValue = 100;
         if( enter ){
+          this.fire( "cardSelected", this.get( "#smallCard" ).attr( "src") );
           this.myZIndex = ( currentZIndex != maxZValue ) ? currentZIndex : this.myZIndex;
           this.get("#smallCard").css('border', "solid 2px yellow" );
           this.get("#smallCard").css('z-index', maxZValue );
@@ -74,6 +72,12 @@ feather.ns("cardmagic");
       },
       onReady: function() {
         var me = this;
+
+        me.get( "#cardMenu" ).menu( {
+          disabled: true
+        } );
+
+        me.get( "#cardMenu" ).hide( );
 
         me.initializeDraggable( );
 
@@ -163,9 +167,9 @@ feather.ns("cardmagic");
 
         //Bind a right click event
         me.domEvents.bind( me.get( "#smallCard" ), "mousedown", function( events ) {
-          if( events.which == 3 ){
+          /*if( events.which == 3 ){
             me.fsm.fire( "viewCard" );
-          }
+          }*/
         });//End Bind
 
         //Turn off border and set this back to a normal zIndex

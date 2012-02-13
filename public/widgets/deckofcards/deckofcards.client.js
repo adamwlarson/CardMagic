@@ -41,6 +41,10 @@ feather.ns("cardmagic");
           }
         });
       },
+      setCurrentSelectedCard: function( filename ) {
+        //alert( "setCurrentSelectedCard" + filename );
+        this.fire( "previewCard", filename );
+      },
       untapAllCards: function( ) {
         for( var i = 0; i < currentFullDeck.length; i++ ) {
           currentFullDeck[i].widget.untapCard( );
@@ -109,6 +113,13 @@ feather.ns("cardmagic");
                                                                       s.attack, s.defense,
                                                                       s.type, imagefile,
                                                                       obj );
+
+                //Bind event for previewing card
+                obj.on( "cardSelected", function( data ){
+                  me.setCurrentSelectedCard( data );
+                } );
+
+                //If finished set up the cards and display the total loaded in
                 if( totalDeckSize == currentFullDeck.length )
                 {
                   //Finished Loading the deck reset cards and display deck total

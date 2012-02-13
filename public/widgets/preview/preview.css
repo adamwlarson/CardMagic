@@ -1,0 +1,9 @@
+.cardmagic_preview .previewCard
+{
+  position: absolute;
+  width: 210px;
+  height: 290px;
+  left: 1070px;
+  top: 415px;
+  vertical-align: middle;
+}
