@@ -1,33 +1,26 @@
-<widget path="widgets/playingboard/" id="boardBackground"/>
-<widget path="widgets/deckofcards/" id="p1Deck" class="deck1Pos"/>
-<widget path="widgets/handofcards/" id="p1Hand"/>
-<widget path="widgets/container/" id="p1LandContainer"/>
-<widget path="widgets/container/" id="p1HandContainer"/>
-<widget path="widgets/container/" id="p1GraveYardContainer"/>
-<widget path="widgets/container/" id="p1InPlayContainer"/>
-<widget path="widgets/container/" id="p2InPlayContainer"/>
-<widget path="widgets/container/" id="p2LandContainer"/>
-<widget path="widgets/preview/" id="p1Preview"/>
+<div class="area left">
+  <div class="player opponent">
+  </div>
 
-<div class="buttonBlock">
-  <div>
-    <input type="button" name="decksubmit" value="Load Deck" id="btnLoadDeck"/>
-  </div>
-  <div>
-    <input type="button" name="deckdeal" value="Deal Hand" id="btnDealHand"/>
-  </div>
-  <div>
-    <input type="button" name="deckshuffle" value="Shuffle" id="btnShuffle"/>
-  </div>
-  <div>
-    <input type="button" name="drawacard" value="Draw A Card" id="btnDrawACard"/>
-  </div>
-  <div>
-    <input type="button" name="untapAllCards" value="UnTap Cards" id="btnUnTap"/>
+  <div class="player me">
   </div>
 </div>
 
+<div class="area middle">
+  <div class="playingArea">
+  </div>
 
-  
-  
-  
+  <div class="actions">
+  </div>
+
+  <div class="zoneViewer main">
+  </div>
+</div>
+
+<div class="area right">
+  <div class="chat">
+  </div>
+
+  <div class="cardPreview">
+  </div>
+</div>

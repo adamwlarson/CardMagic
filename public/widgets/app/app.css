@@ -1,16 +1,66 @@
-.cardmagic_app .deck1Pos
-{
-  position: absolute;
-  left: 25px;
-  top: 880px;
-  padding: 0px;
+body {
+  width: 100%;
 }
 
+/* -- for development */
+.cardmagic_app div {
+  border: 1px red solid;
+  padding: 0;
+  margin: 0;
+}
+/* -- end for development */
 
-.cardmagic_app .buttonBlock
-{
+.cardmagic_app {
   position: absolute;
-  left: 25px;
-  top: 600px;
-  padding: 0px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
+  width: 1280px;
+}
+
+.cardmagic_app .area {
+  height: 100%;
+  float: left;
+  position: relative;
+}
+
+.cardmagic_app .area.left {
+  width: 240px;
+}
+
+.cardmagic_app .area.middle {
+  width: 794px;
+}
+
+.cardmagic_app .area.right {
+  width: 240px;
+}
+
+.cardmagic_app .player {
+  width: 100%;
+  height: 448px;
+}
+
+.cardmagic_app .playingArea {
+  width: 100%;
+  height: 713px;
+}
+
+.cardmagic_app .actions {
+  height: 30px;
+}
+
+.cardmagic_app .zoneViewer {
+  width: 100%;
+  height: 152px;
+}
+
+.cardmagic_app .chat {
+  height: 596px;
+}
+
+.cardmagic_app .cardViewer {
+  height: 300px;
 }
