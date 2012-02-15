@@ -16,12 +16,11 @@ feather.ns("cardmagic");
       toggleMenu: function( show ) {
         var me = this;
         if( show ) {
-          //alert( me.get( "#smallCard" ).offset( ).top );
           me.get(".dropdown").show();
           me.get(".dropdown dd ul").show( );
           me.get( ".dropdown" ).offset( {
-            top: me.get( "#smallCard" ).offset( ).top - 100,
-            left: me.get( "#smallCard" ).offset( ).left
+            top: me.get( "#cardImage" ).offset( ).top - 100,
+            left: me.get( "#cardImage" ).offset( ).left
           } );
         } else {
           me.get(".dropdown").hide();
@@ -31,53 +30,53 @@ feather.ns("cardmagic");
       setStartContainer: function( container ) {
         //This sets up which container the card is started in, this could be saved eventually
         //To handle the case when the card is dropped invalidly
-        container.addCard( this.get( "#smallCard" ) );
+        container.addCard( this );
       },
       cardRotate: function( amount ) {
         //Wow i bet theres a plugin for rotations as well since it has to be handled across all browsers
         //TODO: Look for a jQuery plugin that handles this nicely!!!
-        this.get( "#smallCard" ).css( { '-webkit-transform': 'rotate(' + amount + 'deg)' } );
-        this.get( "#smallCard" ).css( { 'transform': 'rotate(' + amount + 'deg)' } );
-        this.get( "#smallCard" ).css( { '-moz-transform': 'rotate(' + amount + 'deg)' } );
-        this.get( "#smallCard" ).css( { '-ms-transform': 'rotate(' + amount + 'deg)' } );
-        this.get( "#smallCard" ).css( { '-o-transform': 'rotate(' + amount + 'deg)' } );
-        this.get( "#smallCard" ).effect( "shake", { times: 1, distance: 5, direction: "up" }, 100 );
+        this.get( "#cardImage" ).css( { '-webkit-transform': 'rotate(' + amount + 'deg)' } );
+        this.get( "#cardImage" ).css( { 'transform': 'rotate(' + amount + 'deg)' } );
+        this.get( "#cardImage" ).css( { '-moz-transform': 'rotate(' + amount + 'deg)' } );
+        this.get( "#cardImage" ).css( { '-ms-transform': 'rotate(' + amount + 'deg)' } );
+        this.get( "#cardImage" ).css( { '-o-transform': 'rotate(' + amount + 'deg)' } );
+        this.get( "#cardImage" ).effect( "shake", { times: 1, distance: 5, direction: "up" }, 100 );
       },
       cardMouseEvent: function( enter ) {
-        var currentZIndex = this.get( "#smallCard" ).css( 'z-index' );
         if( enter ){
-          this.fire( "cardSelected", this.get( "#smallCard" ).attr( "src") );
-          this.get("#smallCard").css('border', "solid 2px yellow" );
+          this.fire( "cardSelected", this.get( "#cardImage" ).attr( "src") );
+          this.get("#cardImage").css('border', "solid 2px yellow" );
         } else {
-          this.get("#smallCard").css('border', "solid 0px yellow" );
+          this.get("#cardImage").css('border', "solid 0px yellow" );
         }
       },
       setInfo: function(data) {
         this.frontImage = "images/"+data.filename+".jpg";
-        this.get("#smallCard").attr("src", this.frontImage );
+        this.get("#cardImage").attr("src", this.frontImage );
         this.isFlipped = false; //Automatically flip face up
         this.fsm.fire('dealt');
       },
       flipCard: function( ) {
         this.isFlipped = !this.isFlipped;
         var img = this.isFlipped ? this.backImage : this.frontImage;
-        this.get("#smallCard").attr("src", img );
+        this.get("#cardImage").attr("src", img );
       },
       initializeDraggable: function( ) {
-        this.get("#smallCard").draggable( {
+        var me = this;
+        this.container.draggable( {
             revert: 'invalid',
             containment: 'window',
             distance: 15,
             opacity: 1
-        });
+        }).data("card", me);
       },
       makeDraggable: function(draggable) {
         var me = this;
         if (draggable) {
-          me.get("#smallCard").draggable("option", 'disabled', false );
+          me.container.draggable("option", 'disabled', false );
         } else if (!draggable) {
-          me.get("#smallCard").draggable("option", 'opacity', 1.0 );
-          me.get("#smallCard").draggable("option", 'disabled', true );
+          me.container.draggable("option", 'opacity', 1.0 );
+          me.container.draggable("option", 'disabled', true );
         }
       },
       onReady: function() {
@@ -146,7 +145,7 @@ feather.ns("cardmagic");
                 //alert( "Zoom In" );
                 me.cardRotate( 0 );
                 me.cardMouseEvent( false );
-                me.get( "#smallCard" ).effect( "scale", {
+                me.get( "#cardImage" ).effect( "scale", {
                   percent: 300,
                   direction: 'both'
                 }, 10);
@@ -157,7 +156,7 @@ feather.ns("cardmagic");
               leavingState: function( ) {
                 //alert( "Zoom Out" );
                 me.makeDraggable(true);
-                me.get( "#smallCard" ).effect( "scale", {
+                me.get( "#cardImage" ).effect( "scale", {
                   percent: 33.33,
                   direction: 'both'
                 }, 10);
@@ -168,12 +167,12 @@ feather.ns("cardmagic");
       
 
         //Bind an event to make each card highlight or scale
-        me.domEvents.bind( me.get( "#smallCard"), "mouseenter", function( ) {
+        me.domEvents.bind( me.get( "#cardImage"), "mouseenter", function( ) {
           me.fsm.fire("mouseenter");
         });//End Bind
 
         //Bind a right click event
-        me.domEvents.bind( me.get( "#smallCard" ), "mousedown", function( events ) {
+        me.domEvents.bind( me.get( "#cardImage" ), "mousedown", function( events ) {
           //Right click event
           /*if( events.which == 3 ){
             me.fsm.fire( "viewCard" );
@@ -202,18 +201,18 @@ feather.ns("cardmagic");
         });
 
         //Turn off border and set this back to a normal zIndex
-        me.domEvents.bind( me.get( "#smallCard"), "mouseout", function( ) {
+        me.domEvents.bind( me.get( "#cardImage"), "mouseout", function( ) {
           me.fsm.fire("mouseout");
           //me.toggleMenu( false );
         });//End Bind
 
         //Scale the card up for reading
-        me.domEvents.bind( me.get( "#smallCard"), "dblclick", function( ) {
+        me.domEvents.bind( me.get( "#cardImage"), "dblclick", function( ) {
           me.fsm.fire("dblclick");
         });//End Bind
 
         //Flip the card when clicked
-        me.domEvents.bind( me.get( "#smallCard"), "click", function( ) {
+        me.domEvents.bind( me.get( "#cardImage"), "click", function( ) {
           //me.fsm.fire("click");
           menuVisible = !menuVisible;
           me.toggleMenu( menuVisible );
