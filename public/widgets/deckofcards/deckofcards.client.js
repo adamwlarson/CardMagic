@@ -85,32 +85,34 @@ feather.ns("cardmagic");
       loadCard: function( filename ) {
         //Need to find out about resource unloading/loading
         var cardImage = new Image( );
-        cardImage.src = 'images/'+filename+'.jpg';
+        //cardImage.src = 'images/'+filename+'.jpg';
+        cardImage.src = filename;
         return cardImage;
       },
       numCards: function( ) {
         return unusedCards.length;
       },
       loadDeck: function( ) {
-        debugger;
+        //debugger;
         var me = this;
         var totalDeckSize = 0;
         me.wipeCardData( );
-        //TODO pull in the JSON file from deckbox API
-        $.getJSON( "decklists/deck1.JSON", function(data) {
-          $.each(data.deck.card, function( i, s ) {
-            //Load the image
-            var imagefile = me.loadCard( s.filename );
-            for( var j = 0; j < s.quantity; j++ ) {
+
+        $.getJSON( "decklists/BW Human_Vampire_3_with_metadata.json", function( data ) {
+          //alert( "Hello" + data.deck[0] );
+          $.each( data.deck, function( i, s ){
+            //alert( i + s.imageUrl );
+            console.log( s.imageUrl );
+            var imagefile = me.loadCard( s.imageUrl );
+            for( var j = 0; j < s.count; j++ ) {
               //Generate a new card
               totalDeckSize += 1;
               me.createCardWidget( function( obj ) {
                 var deckSize = currentFullDeck.length;
-                //Save the created widget and then create the card data
                 cardWidgets[cardWidgets.length] = obj;
-                currentFullDeck[deckSize] = new createCard( s.filename, s.name, 
-                                                                      s.attack, s.defense,
-                                                                      s.type, imagefile,
+                currentFullDeck[deckSize] = new createCard( s.imageUrl, s.name, 
+                                                                      0,0,
+                                                                      "None", imagefile,
                                                                       obj );
 
                 //Bind event for previewing card
@@ -124,10 +126,9 @@ feather.ns("cardmagic");
                   //Finished Loading the deck reset cards and display deck total
                   me.resetCards( );
                   alert( "Deck Size: " + totalDeckSize );
-                } 
+                }
               });
             }
-            
           });
         });
       },

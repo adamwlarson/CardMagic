@@ -16,7 +16,6 @@ feather.ns("cardmagic");
       toggleMenu: function( show ) {
         var me = this;
         if( show ) {
-          //alert( me.get( "#smallCard" ).offset( ).top );
           me.get(".dropdown").show();
           me.get(".dropdown dd ul").show( );
           me.get( ".dropdown" ).offset( {
@@ -53,7 +52,8 @@ feather.ns("cardmagic");
         }
       },
       setInfo: function(data) {
-        this.frontImage = "images/"+data.filename+".jpg";
+        //this.frontImage = "images/"+data.filename+".jpg";
+        this.frontImage = data.filename;
         this.get("#smallCard").attr("src", this.frontImage );
         this.isFlipped = false; //Automatically flip face up
         this.fsm.fire('dealt');
@@ -74,10 +74,10 @@ feather.ns("cardmagic");
       makeDraggable: function(draggable) {
         var me = this;
         if (draggable) {
-          me.get("#smallCard").draggable("option", 'disabled', false );
+          me.get("#cardContainer").draggable("option", 'disabled', false );
         } else if (!draggable) {
-          me.get("#smallCard").draggable("option", 'opacity', 1.0 );
-          me.get("#smallCard").draggable("option", 'disabled', true );
+          me.get("#cardContainer").draggable("option", 'opacity', 1.0 );
+          me.get("#cardContainer").draggable("option", 'disabled', true );
         }
       },
       onReady: function() {
@@ -155,7 +155,6 @@ feather.ns("cardmagic");
                 return this.previousState;
               },
               leavingState: function( ) {
-                //alert( "Zoom Out" );
                 me.makeDraggable(true);
                 me.get( "#smallCard" ).effect( "scale", {
                   percent: 33.33,
