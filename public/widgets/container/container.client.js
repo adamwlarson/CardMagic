@@ -1,28 +1,59 @@
 feather.ns("cardmagic");
 (function() {
+
+  var containers = new feather.Registry();
+
   cardmagic.container = feather.Widget.create({
     name: "cardmagic.container",
     path: "widgets/container/",
     prototype: {
       onInit: function() {
-        this.itemsInContainer = new Array( );
-        this.enableAutoSpacing = true;
-      },
-      setAutoSpacing: function( flag ) {
-        this.enableAutoSpacing = flag;
-      },
-      setContainerClass: function( name ) {
-        this.get("#backgroundbox").addClass( name );
-      },
-      alignCardsInContainer: function( container, cardArray ) {
-        for( var j = 0; j < cardArray.length; j++ ) {
-          this.alignCardInContainer( container, cardArray[j], j, cardArray);
-        }
-      },
-      alignCardInContainer: function( container, obj, cardNum, cardArray ) { 
+        var me = this;
+        containers.add(this);
 
-        var containerWidth = parseInt( this.get( "#backgroundbox" ).css( 'width' ), 10 );
-        var cardPos = this.enableAutoSpacing ? cardNum : 0;
+        this.cards = new feather.Registry({
+          on: {
+            itemAdded: function(card) {
+              containers.fire("cardAdded", me, card);
+            },
+            itemRemoved: function(card) {
+              me.alignCardsInContainer();
+            }
+          }
+        });
+
+        containers.on("cardAdded", function(container, card) {
+          if (container !== me) {
+            me.cards.remove(card);
+          }
+        });
+      },
+      onReady: function() {
+        var me = this;
+        this.container.droppable( {
+          drop: function(event, ui) {
+            //See if item is in list, remove it and add it to the end
+            //TODO: insert into the location it is dropped rather than just the end!
+            var card = $(ui.draggable).data("card");
+            me.addCard( card );
+          }
+        });
+      },
+      alignCardsInContainer: function() {
+        var me = this;
+        me.cards.each(_.bind(me.alignCardInContainer, me));
+        /* the above is functionally equivalent to this...
+        me.cards.each(function(card, index) {
+          me.alignCardInContainer(card, index);
+        });
+        */
+      },
+      alignCardInContainer: function( card, cardNum ) { 
+        var container = this.container;
+        var obj = card.container;
+        var cardArray = this.cards.items;
+        var containerWidth = parseInt( container.width(), 10 );
+        var cardPos = cardNum;
 
         //Variables to help space the card in the container
         var topSpacing = 10,
@@ -59,58 +90,44 @@ feather.ns("cardmagic");
             zIndex: (cardNum + 1)
           }, 50);
       },
-      addCard:function( card, fromDrop ) {
+      addCardToEnd: function(card){
+        this.addCard(card, this.cards.items.length);
+      },
+      addCard: function( card, index ) {
         var me = this;
-        for( var i = 0; i < me.itemsInContainer.length; i++ ) {
-          if( me.itemsInContainer[i].attr('id') == card.attr('id') ) {
-            me.itemsInContainer.splice(i,1);
-            break;
-          }
-        }
+        me.cards.remove(card);
 
         var currentBestDist = 999999;
-        var currentBestInsertIdx = me.itemsInContainer.length;
-        if( fromDrop && this.enableAutoSpacing ) {
-          for( var i = 0; i < me.itemsInContainer.length; i++ ) {
-            var dist = me.itemsInContainer[i].offset( ).left - card.offset( ).left;
+        var insertIndex;
+        if( typeof index === "undefined" ) {
+          insertIndex = me.cards.items.length;
+          me.cards.each(function(_card, i) {
+            var dist = _card.container.offset( ).left - card.container.offset( ).left;
             if( Math.abs( dist ) < currentBestDist ) {
               currentBestDist = Math.abs( dist );
-              currentBestInsertIdx = (dist < 0) ? (i+1) : i;
+              insertIndex = (dist < 0) ? (i+1) : i;
             }
-          }
+          });
+        } else {
+          insertIndex = index;
         }
-        me.itemsInContainer.splice( currentBestInsertIdx, 0, card );
-        me.alignCardsInContainer( me.get("#backgroundbox"), me.itemsInContainer );
-      },
-      removeCard: function( card ) {
-        var me = this;
-        for( var i = 0; i < me.itemsInContainer.length; i++ ) {
-          if( me.itemsInContainer[i].attr('id') == card.attr('id') ) {
-            //Remove this item
-            me.itemsInContainer.splice(i,1);
-          }
-        }
-        //Align all cards
-        me.alignCardsInContainer( me.get("#backgroundbox"), me.itemsInContainer );
-      },
-      onReady: function() {
-        var me = this;
-        this.get("#backgroundbox").droppable( {
-          drop: function(event, ui) {
-            //See if item is in list, remove it and add it to the end
-            //TODO: insert into the location it is dropped rather than just the end!
-            me.addCard( ui.draggable, true );
-          },
-          over: function(event, ui) {
 
-          },
-          out: function(events, ui) {
-            //Using the revert option on the draggable causes some issues when a valid container
-            //isn't found, and therefore the card isn't added to a container, I need to find a solution
-            //around this problem
-            me.removeCard( ui.draggable );
-          }
-        });
+        if (insertIndex > me.cards.items.length) {
+          insertIndex = me.cards.items.length;
+        }
+
+        //move the card to this container and re-init card
+        card.moveToContainer(me.container);
+
+        //testing...
+        card.container.addClass("test");
+
+        me.cards.add(card, insertIndex);
+        me.alignCardsInContainer();
+      },
+      dispose: function() {
+        containers.remove(this);
+        cardmagic.container._super.prototype.dispose.apply(this, arguments);
       }
     }
   });

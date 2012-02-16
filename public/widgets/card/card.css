@@ -1,3 +1,10 @@
+.cardmagic_card {
+  float: left;
+  z-index: 9999;
+}
+.cardmagic_card.test {
+  position: absolute !important;
+}
 .cardmagic_card .smallCard
 {
   width: 100px;
