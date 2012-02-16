@@ -10,6 +10,9 @@ feather.ns("cardmagic");
         this.frontImage = "images/Card Back.jpg";
         this.backImage = "images/Card Back.jpg";
       },
+      onReady: function() {
+        this.initFSM();
+      },
       untapCard: function( ) {
         this.fsm.fire('untap');
       },
@@ -79,7 +82,13 @@ feather.ns("cardmagic");
           me.container.draggable("option", 'disabled', true );
         }
       },
-      onReady: function() {
+      moveToContainer: function(container) {
+        this.container.remove().appendTo(container);        
+        this.initFSM();
+      },
+      initFSM: function() {
+        this.fsm && this.fsm.dispose();
+        
         var me = this;
         var menuVisible = false;
 
@@ -91,15 +100,8 @@ feather.ns("cardmagic");
             initial: {
               stateStartup: function() {
                 me.makeDraggable(true);
-              },
-              dealt: function() {
-                return this.states.dealt;
-              }
-            },
-            dealt: {
-              stateStartup: function() {
                 return this.states.untapped;
-              }              
+              }
             },
             untapped: {
               stateStartup: function() {
@@ -111,11 +113,11 @@ feather.ns("cardmagic");
               mouseout: function() {
                 me.cardMouseEvent( false );
               },
-              tap: function() {
+              dblclick: function() {
                 return this.states.tapped;
               },
-              viewCard: function( ) {
-                return this.states.zoomed;
+              tap: function() {
+                return this.states.tapped;
               }
             },
             tapped: {
@@ -128,38 +130,11 @@ feather.ns("cardmagic");
               mouseout: function() {
                 me.cardMouseEvent( false );
               },
-              untap: function() {
-                
+              dblclick: function() {
                 return this.states.untapped;
-              },
-              viewCard: function( ) {
-                return this.states.zoomed;
               },
               untap: function( ) {
                 return this.states.untapped;
-              }
-            },
-            zoomed: {
-              stateStartup: function() {
-                me.makeDraggable(false);
-                //alert( "Zoom In" );
-                me.cardRotate( 0 );
-                me.cardMouseEvent( false );
-                me.get( "#cardImage" ).effect( "scale", {
-                  percent: 300,
-                  direction: 'both'
-                }, 10);
-              },
-              viewCard: function( ) {
-                return this.previousState;
-              },
-              leavingState: function( ) {
-                //alert( "Zoom Out" );
-                me.makeDraggable(true);
-                me.get( "#cardImage" ).effect( "scale", {
-                  percent: 33.33,
-                  direction: 'both'
-                }, 10);
               }
             }
           }
@@ -169,14 +144,6 @@ feather.ns("cardmagic");
         //Bind an event to make each card highlight or scale
         me.domEvents.bind( me.get( "#cardImage"), "mouseenter", function( ) {
           me.fsm.fire("mouseenter");
-        });//End Bind
-
-        //Bind a right click event
-        me.domEvents.bind( me.get( "#cardImage" ), "mousedown", function( events ) {
-          //Right click event
-          /*if( events.which == 3 ){
-            me.fsm.fire( "viewCard" );
-          }*/
         });//End Bind
 
         //Untap
@@ -217,6 +184,10 @@ feather.ns("cardmagic");
           menuVisible = !menuVisible;
           me.toggleMenu( menuVisible );
         });//End Bind
+      },
+      dispose: function() {
+        this.fsm && this.fsm.dispose();
+        cardmagic.card._super.prototype.dispose.apply(this, arguments);
       }
     }
   });

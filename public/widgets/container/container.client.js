@@ -116,8 +116,8 @@ feather.ns("cardmagic");
           insertIndex = me.cards.items.length;
         }
 
-        //move the card to this container
-        card.container.remove().appendTo(me.container);
+        //move the card to this container and re-init card
+        card.moveToContainer(me.container);
 
         //testing...
         card.container.addClass("test");
