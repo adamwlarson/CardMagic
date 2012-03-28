@@ -5,10 +5,7 @@
 
     "adamdev": {
       "host": "ubuntu",
-      "socket.io": {
-        "host": "ubuntu",
-        "port": 8081
-      }
+      "port": 80
     },
 
     "ryandev": {
